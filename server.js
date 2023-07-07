@@ -54,7 +54,7 @@ app.post("/new-user", async (request, response) => {
 const server = http.createServer(app);
 const wsServer = new WebSocketServer({ server });
 wsServer.on("connection", (ws) => {
-  ws.on("message", (msg, isBinary) => {
+  ws.on("message", (msg, JSON) => {
     const receivedMSG = JSON.parse(msg);
     console.dir(receivedMSG);
     if (receivedMSG.type === "exit") {
@@ -70,7 +70,7 @@ wsServer.on("connection", (ws) => {
     if (receivedMSG.type === "send") {
       [...wsServer.clients]
         .filter((o) => o.readyState === WebSocket.OPEN)
-        .forEach((o) => o.send(msg, { binary: isBinary }));
+        .forEach((o) => o.send(msg, JSON));
     }
   });
   [...wsServer.clients]
