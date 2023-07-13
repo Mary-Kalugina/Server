@@ -54,7 +54,7 @@ app.post("/new-user", async (request, response) => {
 const server = http.createServer(app);
 const wsServer = new WebSocketServer({ server });
 wsServer.on("connection", (ws) => {
-  ws.on("message", (msg) => {
+  ws.on("message", (msg, JSON) => {
     const receivedMSG = JSON.parse(msg);
     console.dir(receivedMSG);
     if (receivedMSG.type === "exit") {
