@@ -63,18 +63,21 @@ wsServer.on("connection", (ws) => {
       );
       userState.splice(idx, 1);
 
-      [...wsServer.clients].filter((o) => o.readyState === WebSocket.OPEN)
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
         .forEach((o) => o.send(JSON.stringify(userState)));
       return;
     }
     if (receivedMSG.type === "send") {
-
-      [...wsServer.clients].filter((o) => o.readyState === WebSocket.OPEN)
+      console.log(wsServer.clients);
+      [...wsServer.clients]
+        .filter((o) => o.readyState === WebSocket.OPEN)
         .forEach((o) => o.send(msg, { binary: isBinary }));
     }
   });
 
-  [...wsServer.clients].filter((o) => o.readyState === WebSocket.OPEN)
+  [...wsServer.clients]
+    .filter((o) => o.readyState === WebSocket.OPEN)
     .forEach((o) => o.send(JSON.stringify(userState)));
 });
 
